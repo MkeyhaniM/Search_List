@@ -78,7 +78,7 @@ function removeLi() {
     document.querySelectorAll(".deleteCol").forEach(eDelete => {
         eDelete.addEventListener("click", eClickDel => {
             eDelete.parentElement.parentElement.remove();
-            removeFromListStorage(eDelete.parentElement.parentElement.children[0].textContent)
+            removeFromListStorage(eClickDel.target.parentElement.parentElement.children[0].innerText)
         })
     })
 }
@@ -94,6 +94,8 @@ function addToLocalStorage(addLocal) {
     localStorage.setItem("list", save);
 }
 
+////////////////////////////////
+
 function removeFromListStorage(nameBook) {
     let save;
     if (localStorage.getItem("list") == null) {
@@ -101,15 +103,20 @@ function removeFromListStorage(nameBook) {
     } else {
         save = localStorage.getItem("list").split(",")
     }
-    let meghder = nameBook.matchAll(/a-zA-Z/);
+    let loges = nameBook.trim();
+
     for (let i = 0; i < save.length; i++) {
-        if (save[i] === meghder) {
+        if (save[i] == loges) {
             save.splice(i, 1)
         } else {
             console.log("123")
         }
     }
-    console.log(meghder)
-    localStorage.setItem("list", save)
-    console.log(save)
+    if (save.length > 0) {
+        localStorage.clear("list")
+    } else {
+        localStorage.setItem("list", save)
+    }
 }
+
+/////////////////////////////
